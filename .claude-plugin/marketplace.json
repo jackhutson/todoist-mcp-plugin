@@ -1,0 +1,13 @@
+{
+  "name": "todoist-marketplace",
+  "owner": {
+    "name": "Jack Hutson"
+  },
+  "plugins": [
+    {
+      "name": "todoist",
+      "source": "./",
+      "description": "Token-efficient Todoist integration via official Doist MCP with subagent isolation"
+    }
+  ]
+}
