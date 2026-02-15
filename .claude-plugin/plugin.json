@@ -1,0 +1,10 @@
+{
+  "name": "todoist",
+  "description": "Token-efficient Todoist integration via official Doist MCP with subagent isolation",
+  "version": "1.0.0",
+  "author": {
+    "name": "Jack Hutson"
+  },
+  "license": "MIT",
+  "keywords": ["todoist", "tasks", "productivity", "mcp"]
+}
