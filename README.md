@@ -79,8 +79,38 @@ Natural language, delegated automatically:
 
 - **Subagent isolation** — MCP tool definitions never enter the main context window
 - **Progressive disclosure** — skill metadata always loaded; full instructions only when triggered
+- **Batch-first** — all MCP tools accept arrays; the plugin collects items and makes single batch calls
 - **Cache-first** — Todoist structure synced once per session, reused across operations
 - **Official MCP** — uses Doist's own server (`ai.todoist.net/mcp`) with fewer, workflow-oriented tools and OAuth auth
+
+## Lessons Learned: v1.0 → v1.1 Redesign
+
+The v1.0 plugin had a design flaw that caused a 42-minute failure loop in production. Documenting it here so others building MCP wrapper plugins can avoid the same mistake.
+
+### The Problem
+
+The agent's system prompt described operations abstractly — `Operation: create | complete | update` — without ever naming the actual MCP tools. When the agent needed to complete a task, it had to **guess** the tool name. It guessed `complete-task` (singular). The actual tool is `complete-tasks` (plural). Every Doist MCP tool uses plural kebab-case names.
+
+The agent tried `complete-task`, `close-task`, `complete_task`, and several other variations before timing out. The tool names were right there in the MCP schema, but the agent's system prompt never referenced them.
+
+### The Root Causes
+
+1. **No tool name grounding.** The system prompt said "use the appropriate MCP tool" but never listed which tools exist. The agent was expected to discover or guess them at runtime.
+
+2. **Invented delegation protocol.** The skills defined an `Operation: create | complete` protocol that didn't map to anything real. This added a translation layer (skill → protocol → tool name) that introduced failure modes without adding value.
+
+3. **Singular-first design.** All operations were framed as singular ("complete a task", "create a task") even though every Doist MCP tool accepts arrays. This wasted API calls — completing 5 tasks meant 5 separate calls instead of 1.
+
+### The Fix
+
+- **Agent gets an MCP tool reference table** — all 27 tool names with key parameters, directly in the system prompt. No guessing.
+- **Natural language delegation** — skills tell the main agent *what to ask for* in plain language. The agent maps that to the correct tool using its reference table.
+- **Batch-first** — array operations are the default. Single items are arrays of length 1.
+- **Removed unnecessary abstractions** — no invented protocol, no priority mapping (MCP handles it), no name-to-ID resolution instructions (MCP handles it).
+
+### The Takeaway
+
+When wrapping an MCP server in a subagent, **name the tools explicitly in the agent's system prompt.** Don't rely on the agent discovering tool names from the MCP schema at runtime — it will guess wrong. The MCP tool names are the source of truth; your agent instructions should align with them, not invent their own vocabulary.
 
 ## Requirements
 
