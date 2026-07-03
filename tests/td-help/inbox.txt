@@ -1,0 +1,17 @@
+Usage: td inbox [options]
+
+List tasks in Inbox
+
+Options:
+  --priority <p1-p4>  Filter by priority (choices: "p1", "p2", "p3", "p4")
+  --due <date>        Filter by due date (today, overdue, or YYYY-MM-DD)
+  --limit <n>         Limit number of results (default: 300)
+  --cursor <cursor>   Pagingation cursor from previous response to fetch next
+                      page
+  --all               Fetch all results (no limit)
+  --json              Output as JSON
+  --ndjson            Output as newline-delimited JSON
+  --full              Include all fields in JSON output
+  --raw               Disable markdown rendering
+  --show-urls         Show web app URLs for each task
+  -h, --help          display help for command

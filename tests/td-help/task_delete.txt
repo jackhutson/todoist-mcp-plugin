@@ -1,0 +1,8 @@
+Usage: td task delete [options] [ref]
+
+Delete a task
+
+Options:
+  --yes       Confirm deletion
+  --dry-run   Preview what would happen without executing
+  -h, --help  display help for command

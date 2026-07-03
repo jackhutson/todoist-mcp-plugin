@@ -1,0 +1,16 @@
+Usage: td project list [options]
+
+List all projects, or search by name
+
+Options:
+  --search <query>   Search projects by name
+  --limit <n>        Limit number of results (default: 50)
+  --cursor <cursor>  Pagingation cursor from previous response to fetch next
+                     page
+  --all              Fetch all results (no limit)
+  --personal         Show only personal projects
+  --json             Output as JSON
+  --ndjson           Output as newline-delimited JSON
+  --full             Include all fields in JSON output
+  --show-urls        Show web app URLs for each project
+  -h, --help         display help for command

@@ -1,0 +1,12 @@
+Usage: td filter create [options]
+
+Create a filter
+
+Options:
+  --name <name>    Filter name (required)
+  --query <query>  Filter query (required, e.g., "today | overdue")
+  --color <color>  Filter color
+  --favorite       Mark as favorite
+  --json           Output the created filter as JSON
+  --dry-run        Preview what would happen without executing
+  -h, --help       display help for command

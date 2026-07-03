@@ -1,0 +1,18 @@
+Usage: td completed list [options]
+
+List completed tasks, or search by query
+
+Options:
+  --search <query>   Search completed tasks by query
+  --since <date>     Start date (YYYY-MM-DD), default: today
+  --until <date>     End date (YYYY-MM-DD), default: tomorrow
+  --project <name>   Filter by project
+  --limit <n>        Limit number of results (default: 300)
+  --cursor <cursor>  Pagingation cursor from previous response to fetch next
+                     page
+  --all              Fetch all results (no limit)
+  --json             Output as JSON
+  --ndjson           Output as newline-delimited JSON
+  --full             Include all fields in JSON output
+  --show-urls        Show web app URLs for each task
+  -h, --help         display help for command

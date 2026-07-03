@@ -1,0 +1,10 @@
+Usage: td filter list [options]
+
+List all filters
+
+Options:
+  --json       Output as JSON
+  --ndjson     Output as newline-delimited JSON
+  --full       Include all fields in JSON output
+  --show-urls  Show web app URLs for each filter
+  -h, --help   display help for command

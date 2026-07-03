@@ -1,0 +1,18 @@
+Usage: td upcoming [options] [days]
+
+Show tasks due in the next N days (default: 7)
+
+Options:
+  --limit <n>         Limit number of results (default: 300)
+  --cursor <cursor>   Pagingation cursor from previous response to fetch next
+                      page
+  --all               Fetch all results (no limit)
+  --any-assignee      Show tasks assigned to anyone (default: only
+                      me/unassigned)
+  --workspace <name>  Filter to tasks in workspace
+  --personal          Filter to tasks in personal projects
+  --json              Output as JSON
+  --ndjson            Output as newline-delimited JSON
+  --full              Include all fields in JSON output
+  --show-urls         Show web app URLs for each task
+  -h, --help          display help for command

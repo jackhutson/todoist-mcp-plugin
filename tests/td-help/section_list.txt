@@ -1,0 +1,14 @@
+Usage: td section list [options] [project]
+
+List sections in a project, or search by name
+
+Options:
+  --project <ref>   Project name or id:xxx
+  --search <query>  Search sections by name
+  --limit <n>       Limit number of results (default: 300)
+  --all             Fetch all results (no limit)
+  --json            Output as JSON
+  --ndjson          Output as newline-delimited JSON
+  --full            Include all fields in JSON output
+  --show-urls       Show web app URLs for each section
+  -h, --help        display help for command
