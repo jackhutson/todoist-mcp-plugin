@@ -1,94 +1,82 @@
-# todoist-mcp-plugin
+# todoist plugin for Claude Code
 
-A Claude Code plugin that wraps the official Todoist MCP server in a subagent, keeping tool definitions out of your main context window.
+Token-efficient Todoist for Claude Code: lean operations backed by the
+official `td` CLI, plus optional workflow skills — session capture, a
+daily ritual, and inbox triage — that adapt to your structure instead of
+imposing one.
 
-Every MCP server you enable in Claude Code injects tool schemas into your system prompt -- consuming tokens in every message, even when idle. The Todoist MCP adds ~2,500 tokens worth of schemas. This plugin isolates them in a subagent so you only pay when you actually use Todoist.
-
-## Architecture
-
-```
-┌─────────────────────────────────────────────────┐
-│  Main Claude Code Conversation                  │
-│                                                 │
-│  Skills loaded on demand:                       │
-│  ┌─────────────┐  ┌──────────────┐              │
-│  │todoist-tasks │  │ todoist-sync │  ~50-80 tok  │
-│  │  (metadata)  │  │  (metadata)  │  idle cost   │
-│  └──────┬──────┘  └──────┬───────┘              │
-│         │                │                      │
-│         └───────┬────────┘                      │
-│                 ▼                                │
-│  ┌──────────────────────────────┐               │
-│  │      todoist-agent           │               │
-│  │   (separate context window)  │               │
-│  │                              │               │
-│  │  MCP tool definitions live   │               │
-│  │  HERE, not in main context   │               │
-│  │                              │               │
-│  │  ┌────────────────────────┐  │               │
-│  │  │ Doist MCP (HTTP/OAuth) │  │               │
-│  │  │ ai.todoist.net/mcp     │  │               │
-│  │  └────────────────────────┘  │               │
-│  └──────────────────────────────┘               │
-└─────────────────────────────────────────────────┘
-```
-
-Skills expose only short metadata to the main context (~50-80 tokens). When triggered, the full skill body loads and delegates to a subagent that holds the MCP connection in its own context window. Tool schemas stay isolated.
-
-### Token Cost Comparison
-
-| Setup | Idle Context Cost | Per-Operation Cost |
-|-------|------------------|--------------------|
-| Raw MCP (always loaded) | ~2,500 tokens/message | Same + API response |
-| This plugin | ~50-80 tokens/message | ~900 tokens (skill body) + subagent |
-
-Over a 50-message coding session, raw MCP costs 100k-150k tokens on Todoist schemas you used twice. This plugin pays only when you use it.
-
-## Quick Start
+## Quick start
 
 ```bash
 claude plugin install <your-username>/todoist-mcp-plugin
 ```
 
-Then authenticate with the Todoist MCP server:
-
-1. Launch Claude Code
-2. Run `/mcp`
-3. Select the `todoist` server
-4. Complete the browser-based OAuth flow
-
-No API keys to manage -- the official Doist server uses OAuth.
-
-## Usage
-
-Natural language, delegated automatically:
+Then in Claude Code:
 
 ```
-"Add a task 'Review PR #42' to Work with p2 priority due tomorrow"
-"What's due today?"
-"Mark the deploy task as done"
-"Refresh my Todoist projects"
+/todoist:setup
 ```
 
-## Supported Operations
+Setup checks/installs the `td` CLI (`npm install -g @doist/todoist-cli`),
+walks through browser OAuth (token stored in your OS keyring), runs
+`td doctor`, and offers to allowlist read-only `td` commands so daily use
+doesn't trigger permission prompts.
 
-- **Task CRUD** -- create, complete, update, delete
-- **Queries** -- by project, priority, due date, label, or Todoist filter strings
-- **Structure sync** -- projects, sections, labels fetched and cached in-conversation
-- **Error recovery** -- automatic re-sync on name resolution failures
+## Skills
 
-## Design Principles
+| Skill | Invoked | What it does |
+|-------|---------|--------------|
+| `todoist` | automatically | Lean td command surface for any task operation |
+| `/todoist:setup` | manually | Install, auth, health check, permission allowlist |
+| `/todoist:capture` | manually | Harvest this session's loose ends into tasks — the reason to have Todoist inside your coding agent |
+| `/todoist:daily` | manually | Morning walkthrough: triage overdue → capture → prioritize → sort → plan |
+| `/todoist:triage` | manually | Inbox-zero processor, one item at a time, one batch of changes |
 
-- **Subagent isolation** -- MCP tool definitions never enter the main context window
-- **Progressive disclosure** -- skill metadata always loaded; full instructions only when triggered
-- **Batch-first** -- all MCP tools accept arrays; the plugin collects items and makes single batch calls
-- **Cache-first** -- Todoist structure synced once per session, reused across operations
-- **Official MCP** -- uses Doist's own server (`ai.todoist.net/mcp`) with OAuth auth
+Workflow skills learn your preferences lazily — a question is asked only
+when first needed, then persisted to
+`~/.config/todoist-plugin/preferences.md` (plain markdown; edit freely).
+
+## Architecture
+
+Two execution paths, chosen by output size:
+
+- **Inline `td`** — bounded operations run directly in the main context.
+- **`todoist-agent`** — reads that scale with account size (full scans,
+  multi-project sweeps) run inside a subagent that returns a ≤30-line
+  digest. Verbose output never reaches your context window.
+
+## Token math
+
+| | Idle | Triggered |
+|---|------|-----------|
+| This plugin (ops skill) | ~70 tokens | ~1.2k tokens |
+| Official `td` skill | ~70 tokens | ~6.8k tokens |
+| Doist MCP server (always loaded) | ~2.5k tokens/message | — |
+
+## Why not the official `td` skill?
+
+`td skill install claude-code` installs Doist's reference manual: ~6,800
+tokens covering the full CLI, including developer apps, billing, backups,
+and Help Center search. This plugin's ops skill curates the ~20 commands
+task workflows actually use and relies on `td <command> --help` for the
+long tail — the CLI is self-documenting. A CI drift check diffs `td`'s
+help output against snapshots so the curated surface can't silently rot.
+
+Credit where due: the untrusted-content rule, priority mapping gotcha,
+and quickadd guidance are adapted from Doist's skill (MIT).
 
 ## Requirements
 
 - Claude Code with plugin support
+- Node.js 20+ (for the td CLI)
 - Todoist account (free or Pro)
+
+## Migrating from v1
+
+v1 wrapped the Doist MCP server. v2 replaces it with the `td` CLI:
+run `/todoist:setup`, then remove the old `todoist` MCP connection via
+`/mcp`. The v1 skills (`todoist-tasks`, `todoist-sync`) are gone; the
+`todoist` ops skill covers both.
 
 ## License
 
