@@ -1,8 +1,8 @@
 {
   "name": "todoist",
-  "description": "Token-efficient Todoist integration via official Doist MCP with subagent isolation",
-  "version": "1.1.0",
+  "description": "Token-efficient Todoist for Claude Code — lean td-CLI operations plus optional workflow skills (session capture, daily ritual, inbox triage)",
+  "version": "2.0.0",
   "author": {},
   "license": "MIT",
-  "keywords": ["todoist", "tasks", "productivity", "mcp"]
+  "keywords": ["todoist", "tasks", "productivity", "cli", "workflows", "gtd"]
 }

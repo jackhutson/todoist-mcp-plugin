@@ -5,7 +5,7 @@
     {
       "name": "todoist",
       "source": "./",
-      "description": "Token-efficient Todoist integration via official Doist MCP with subagent isolation"
+      "description": "Token-efficient Todoist for Claude Code — lean td-CLI operations plus optional workflow skills (session capture, daily ritual, inbox triage)"
     }
   ]
 }
