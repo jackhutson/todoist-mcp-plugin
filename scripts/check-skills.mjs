@@ -5,6 +5,10 @@ import { join } from 'node:path';
 
 const BUDGETS = { todoist: 1300, setup: 1200, capture: 900, triage: 1000, daily: 1400 };
 const DEFAULT_BUDGET = 1500;
+// Frontmatter (name + description) is loaded into every session regardless of
+// whether the skill triggers — the idle cost the README's token table cites.
+const IDLE_BUDGETS = { todoist: 120, setup: 110, capture: 100, triage: 90, daily: 90 };
+const DEFAULT_IDLE_BUDGET = 120;
 
 const root = new URL('..', import.meta.url).pathname;
 const skillsDir = join(root, 'skills');
@@ -39,7 +43,15 @@ for (const dir of readdirSync(skillsDir).sort()) {
     console.error(`FAIL ${dir}: ~${tokens} tokens > budget ${budget}`);
     failed = true;
   } else {
-    console.log(`OK   ${dir}: ~${tokens}/${budget} tokens`);
+    console.log(`OK   ${dir}: ~${tokens}/${budget} tokens (triggered)`);
+  }
+  const idleBudget = IDLE_BUDGETS[dir] ?? DEFAULT_IDLE_BUDGET;
+  const idleTokens = Math.round(fm.length / 4);
+  if (idleTokens > idleBudget) {
+    console.error(`FAIL ${dir}: ~${idleTokens} idle tokens > budget ${idleBudget}`);
+    failed = true;
+  } else {
+    console.log(`OK   ${dir}: ~${idleTokens}/${idleBudget} tokens (idle)`);
   }
 }
 process.exit(failed ? 1 : 0);
