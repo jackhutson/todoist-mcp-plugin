@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
       - run: node scripts/check-plugin-meta.mjs
       - run: node scripts/check-skills.mjs
   drift:
@@ -19,6 +19,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - run: npm install -g @doist/todoist-cli
+          node-version: 20
+      # Pinned to the version the snapshots were generated from, so upstream
+      # releases can't redden unrelated PRs. Upstream drift is caught by the
+      # weekly td-drift-upstream workflow; bump by regenerating snapshots.
+      - run: npm install -g "@doist/todoist-cli@$(cat tests/td-help/.td-version)"
       - run: bash scripts/check-td-drift.sh
