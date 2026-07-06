@@ -1,0 +1,9 @@
+Usage: td task view [options] [ref]
+
+View task details
+
+Options:
+  --json      Output as JSON
+  --full      Include all fields in output
+  --raw       Disable markdown rendering
+  -h, --help  display help for command

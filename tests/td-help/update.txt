@@ -1,0 +1,13 @@
+Usage: td update [options] [command]
+
+Update the CLI to the latest version for the configured channel
+
+Options:
+  --check           Check for updates without installing
+  --channel         Show the current update channel
+  --json            Emit machine-readable JSON output
+  --ndjson          Emit machine-readable NDJSON output
+  -h, --help        display help for command
+
+Commands:
+  switch [options]  Switch update channel between stable and pre-release
