@@ -25,7 +25,10 @@ for cmd in "${CMDS[@]}"; do
   name="${cmd// /_}"
   [[ -z "$name" ]] && name="td"
   snap="$SNAP_DIR/$name.txt"
-  out="$(td $cmd --help 2>&1 | sed -E 's/[0-9]+\.[0-9]+\.[0-9]+/X.Y.Z/g')"
+  # `|| true`: a removed/renamed subcommand must surface as a DRIFT diff
+  # below, not abort the whole run via set -e.
+  raw="$(td $cmd --help 2>&1 || true)"
+  out="$(printf '%s\n' "$raw" | sed -E 's/[0-9]+\.[0-9]+\.[0-9]+/X.Y.Z/g')"
   if [[ "$mode" == "update" ]]; then
     printf '%s\n' "$out" > "$snap"
     echo "updated $snap"

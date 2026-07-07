@@ -7,13 +7,11 @@ imposing one.
 
 ## Quick start
 
-```bash
-claude plugin install jackhutson/todoist-mcp-plugin
-```
-
-Then in Claude Code:
+In Claude Code:
 
 ```
+/plugin marketplace add jackhutson/todoist-mcp-plugin
+/plugin install todoist@todoist-marketplace
 /todoist:setup
 ```
 
@@ -49,12 +47,13 @@ Two execution paths, chosen by output size:
 
 | | Idle | Triggered |
 |---|------|-----------|
-| This plugin (ops skill) | ~110 tokens | ~1.2k tokens |
+| This plugin (ops skill) | ~110 tokens | ~625 tokens |
 | Official `td` skill | ~120 tokens | ~6.8k tokens |
 | Doist MCP server (always loaded) | ~2.5k tokens/message | — |
 
 Idle = frontmatter loaded every session; triggered = full skill body.
-Both budgets are asserted in CI (`scripts/check-skills.mjs`).
+Figures are measured (~chars/4) by `scripts/check-skills.mjs`, which CI
+runs with hard ceilings so neither cost can silently grow.
 
 ## Why not the official `td` skill?
 

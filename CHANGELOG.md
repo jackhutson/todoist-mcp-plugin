@@ -10,7 +10,7 @@
 - Marketplace/plugin metadata rewritten for the new positioning.
 
 ### Added
-- `todoist` ops skill — curated td command surface (~1.2k tokens
+- `todoist` ops skill — curated td command surface (~625 tokens
   triggered) with batch-first, error-repair, and untrusted-content rules.
 - `/todoist:setup` — install, auth, `td doctor`, optional read-only
   permission allowlist.
