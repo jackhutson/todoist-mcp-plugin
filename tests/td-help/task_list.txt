@@ -1,0 +1,25 @@
+Usage: td task list [options]
+
+List tasks
+
+Options:
+  --project <name>    Filter by project name or id:xxx
+  --parent <ref>      Filter subtasks of a parent task
+  --label <name>      Filter by label (comma-separated for multiple)
+  --priority <p1-p4>  Filter by priority (choices: "p1", "p2", "p3", "p4")
+  --due <date>        Filter by due date (today, overdue, or YYYY-MM-DD)
+  --filter <query>    Raw Todoist filter query
+  --assignee <ref>    Filter by assignee (me or id:xxx)
+  --unassigned        Show only unassigned tasks
+  --workspace <name>  Filter to tasks in workspace
+  --personal          Filter to tasks in personal projects
+  --limit <n>         Limit number of results (default: 300)
+  --cursor <cursor>   Pagingation cursor from previous response to fetch next
+                      page
+  --all               Fetch all results (no limit)
+  --json              Output as JSON
+  --ndjson            Output as newline-delimited JSON
+  --full              Include all fields in JSON output
+  --raw               Disable markdown rendering
+  --show-urls         Show web app URLs for each task
+  -h, --help          display help for command

@@ -1,0 +1,12 @@
+Usage: td task move [options] [ref]
+
+Move task to project/section/parent
+
+Options:
+  --project <ref>  Target project (name or id:xxx)
+  --section <ref>  Target section (name or id:xxx)
+  --parent <ref>   Parent task (name or id:xxx)
+  --no-parent      Remove parent (move to project root)
+  --no-section     Remove section (move to project root)
+  --dry-run        Preview what would happen without executing
+  -h, --help       display help for command

@@ -1,0 +1,30 @@
+Usage: td task update [options] [ref]
+
+Update a task
+
+Options:
+  --content <text>      New content
+  --due <date>          New due date (YYYY-MM-DD or simple natural language; see
+                        Notes below)
+  --no-due              Remove due date
+  --deadline <date>     Deadline date (YYYY-MM-DD)
+  --no-deadline         Remove deadline
+  --priority <p1-p4>    New priority (choices: "p1", "p2", "p3", "p4")
+  --labels <a,b>        New labels (replaces existing)
+  --no-labels           Remove all labels
+  --description <text>  New description
+  --stdin               Read task description from stdin
+  --assignee <ref>      Assign to user (name, email, id:xxx, or "me")
+  --unassign            Remove assignee
+  --duration <time>     Duration (e.g., 30m, 1h, 2h15m)
+  --uncompletable       Mark task as non-completable
+  --completable         Revert task to completable (undoes --uncompletable)
+  --order <number>      Task position within project/parent (0 = top)
+  --json                Output the updated task as JSON
+  --dry-run             Preview what would happen without executing
+  -h, --help            display help for command
+
+Notes:
+  --due is sent verbatim as the task's due_string, with the same caveats as
+  "task add --due": the server's due_string parser does not unpack some more
+  complex clauses (i.e. "starting <date>").

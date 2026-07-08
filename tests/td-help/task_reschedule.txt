@@ -1,0 +1,8 @@
+Usage: td task reschedule [options] [ref] [date]
+
+Reschedule a task (preserves recurrence)
+
+Options:
+  --json      Output the rescheduled task as JSON
+  --dry-run   Preview what would happen without executing
+  -h, --help  display help for command

@@ -1,0 +1,27 @@
+Usage: td task [options] [command]
+
+Manage tasks
+
+Options:
+  -h, --help                         display help for command
+
+Commands:
+  list [options]                     List tasks
+  view [options] [ref]               View task details
+  complete [options] [ref]           Complete a task
+  uncomplete [options] [ref]         Reopen a completed task (requires id:xxx)
+  delete [options] [ref]             Delete a task
+  add [options] [content]            Add a task
+  quickadd|qa [options] [text]       Quick add a task using natural language
+                                     (e.g. "Buy milk tomorrow p1 #Shopping")
+  update [options] [ref]             Update a task
+  move [options] [ref]               Move task to project/section/parent
+  reschedule [options] [ref] [date]  Reschedule a task (preserves recurrence)
+  browse [ref]                       Open task in browser
+  help [command]                     display help for command
+
+Examples:
+  td task add "Buy milk" --due tomorrow
+  td task qa "Buy milk tomorrow p1 #Shopping"
+  td task list --project "Work" --priority p1
+  td task view "Buy milk"

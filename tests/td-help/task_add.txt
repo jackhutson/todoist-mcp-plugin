@@ -1,0 +1,28 @@
+Usage: td task add [options] [content]
+
+Add a task
+
+Options:
+  --content <text>      Task content (legacy, prefer positional argument)
+  --due <date>          Due date (YYYY-MM-DD or simple natural language; see
+                        Notes below)
+  --deadline <date>     Deadline date (YYYY-MM-DD)
+  --priority <p1-p4>    Priority level (choices: "p1", "p2", "p3", "p4")
+  --project <name>      Project name or id:xxx
+  --section <ref>       Section (name with --project, or id:xxx)
+  --labels <a,b>        Comma-separated labels
+  --parent <ref>        Parent task reference
+  --description <text>  Task description
+  --stdin               Read task description from stdin
+  --assignee <ref>      Assign to user (name, email, id:xxx, or "me")
+  --duration <time>     Duration (e.g., 30m, 1h, 2h15m)
+  --uncompletable       Mark task as non-completable (reference/header task)
+  --order <number>      Task position within project/parent (0 = top)
+  --json                Output the created task as JSON
+  --dry-run             Preview what would happen without executing
+  -h, --help            display help for command
+
+Notes:
+  --due is sent verbatim as the task's due_string. The server's due_string
+  parser handles simple inputs ("2026-06-01", "tomorrow", "every Monday") but
+  does not unpack some more complex clauses (i.e. "starting <date>").

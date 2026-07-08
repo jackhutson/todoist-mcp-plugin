@@ -1,0 +1,63 @@
+Usage: td [options] [command]
+
+Todoist CLI
+
+Options:
+  -V, --version            output the version number
+  --no-spinner             Disable loading animations
+  --progress-jsonl [path]  Output progress events as JSONL to stderr or file
+  -v, --verbose            Increase output verbosity (repeat up to 4x: -v, -vv,
+                           -vvv, -vvvv)
+  --accessible             Add text labels to color-coded output (also:
+                           TD_ACCESSIBLE=1)
+  -q, --quiet              Suppress success messages (create commands still
+                           print the ID)
+  --user <ref>             Run as a specific stored Todoist account (id or
+                           email). See `td accounts list`.
+  -h, --help               display help for command
+
+Commands:
+  add                      Quick add task with natural language (e.g., "Buy milk
+                           tomorrow p1 #Shopping")
+  changelog                Show recent changelog entries
+  doctor                   Diagnose common CLI setup and environment issues
+  hc                       Search Todoist Help Center articles
+  today                    Show tasks due today and overdue
+  upcoming                 Show tasks due in the next N days (default: 7)
+  inbox                    List tasks in Inbox
+  completed                Show completed tasks
+  task                     Manage tasks
+  project                  Manage projects
+  label                    Manage labels
+  comment                  Manage comments
+  attachment               Manage file attachments
+  section                  Manage project sections
+  workspace                Manage workspaces
+  activity                 View activity logs
+  reminder                 Manage task reminders
+  settings                 Manage user settings
+  auth                     Manage authentication
+  accounts|user            Manage stored Todoist accounts (multi-user)
+  apps                     Manage your registered Todoist developer apps
+  backup                   Manage backups
+  billing                  View billing and subscription information
+  stats                    View productivity stats and karma
+  filter                   Manage filters
+  goal                     Manage goals
+  folder                   Manage workspace folders
+  notification             Manage notifications
+  skill                    Manage coding agent skills/integrations
+  template                 Manage project templates (export, import, create)
+  completion               Manage shell completions
+  config                   Manage CLI configuration
+  view                     View a Todoist entity or page by URL
+  update                   Update the CLI to the latest version for the
+                           configured channel
+  help [command]           display help for command
+
+Note for AI/LLM agents:
+  Use "td task add" (not "td add") to create tasks with structured flags.
+  Use --json or --ndjson flags for unambiguous, parseable output.
+  Default JSON shows essential fields; use --full for all fields.
+  Use --quiet to suppress success messages (create commands still print the ID).
+  Use --user <id|email> on any command to act as a specific stored account.

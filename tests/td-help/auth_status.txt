@@ -1,0 +1,9 @@
+Usage: td auth status [options]
+
+Show current authentication status
+
+Options:
+  --json        Emit machine-readable JSON output
+  --ndjson      Emit machine-readable NDJSON output
+  --user <ref>  Target a specific stored account
+  -h, --help    display help for command

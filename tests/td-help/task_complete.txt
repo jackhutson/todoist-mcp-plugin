@@ -1,0 +1,8 @@
+Usage: td task complete [options] [ref]
+
+Complete a task
+
+Options:
+  --forever   Complete recurring task permanently (stops recurrence)
+  --dry-run   Preview what would happen without executing
+  -h, --help  display help for command

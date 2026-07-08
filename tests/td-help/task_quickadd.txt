@@ -1,0 +1,9 @@
+Usage: td task quickadd|qa [options] [text]
+
+Quick add a task using natural language (e.g. "Buy milk tomorrow p1 #Shopping")
+
+Options:
+  --stdin     Read text from stdin
+  --json      Output the created task as JSON
+  --dry-run   Preview what would happen without executing
+  -h, --help  display help for command

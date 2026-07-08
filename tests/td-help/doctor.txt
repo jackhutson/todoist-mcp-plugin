@@ -1,0 +1,8 @@
+Usage: td doctor [options]
+
+Diagnose common CLI setup and environment issues
+
+Options:
+  --json      Output diagnostic results as JSON
+  --offline   Skip network checks against Todoist and npm
+  -h, --help  display help for command

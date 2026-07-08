@@ -1,0 +1,13 @@
+Usage: td label list [options]
+
+List or search labels
+
+Options:
+  --search <term>  Search labels by name
+  --limit <n>      Limit number of results (default: 300)
+  --all            Fetch all results (no limit)
+  --json           Output as JSON
+  --ndjson         Output as newline-delimited JSON
+  --full           Include all fields in JSON output
+  --show-urls      Show web app URLs for each label
+  -h, --help       display help for command

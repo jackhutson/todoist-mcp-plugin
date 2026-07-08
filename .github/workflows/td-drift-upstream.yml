@@ -1,0 +1,44 @@
+name: td drift (upstream)
+# Weekly check of the LATEST @doist/todoist-cli against our snapshots.
+# Files an issue instead of failing PR CI — per-PR CI pins the version.
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+jobs:
+  drift-latest:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install -g @doist/todoist-cli
+      - id: drift
+        run: bash scripts/check-td-drift.sh
+        continue-on-error: true
+      - if: steps.drift.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          version="$(td --version)"
+          title="td CLI drift: @doist/todoist-cli@${version} diverges from snapshots"
+          open=$(gh issue list --state open --search "\"td CLI drift\" in:title" --json number --jq 'length')
+          if [ "$open" -gt 0 ]; then
+            echo "open drift issue already exists, skipping"
+            exit 0
+          fi
+          gh issue create --title "$title" --body "$(cat <<EOF
+          The weekly upstream drift check found that \`td --help\` output from
+          the latest CLI (\`${version}\`) no longer matches \`tests/td-help/\`
+          snapshots (pinned at \`$(cat tests/td-help/.td-version)\`).
+
+          To resolve: review \`skills/todoist/SKILL.md\` against the new help
+          output, then run \`bash scripts/check-td-drift.sh update\` and commit.
+
+          See the failed run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EOF
+          )"

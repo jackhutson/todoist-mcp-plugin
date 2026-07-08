@@ -1,0 +1,28 @@
+Usage: td auth login [options]
+
+Authenticate with Todoist via OAuth
+
+Options:
+  --read-only                 Request read-only scopes
+  --callback-port <port>      Override the local OAuth callback port
+  --json                      Emit machine-readable JSON output
+  --ndjson                    Emit machine-readable NDJSON output
+  --no-browser-open           Print the authorization URL instead of opening it
+                              in a browser automatically
+  --additional-scopes <list>  Comma-separated opt-in OAuth scopes (see list
+                              below). The flag may be repeated; every occurrence
+                              is merged.
+  -h, --help                  display help for command
+
+Available scopes (comma-separated for --additional-scopes):
+  app-management  Manage your registered Todoist developer apps (rotate secrets, edit webhooks).
+  backups         List and download your Todoist backups.
+  billing         View your billing and subscription information.
+
+Examples:
+  td auth login
+  td auth login --read-only
+  td auth login --additional-scopes=app-management
+  td auth login --additional-scopes=billing
+  td auth login --read-only --additional-scopes=backups
+  td auth login --additional-scopes=app-management,backups
