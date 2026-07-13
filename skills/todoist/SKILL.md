@@ -32,10 +32,13 @@ session and honor its `key: value` entries (e.g. `capture-project`).
 - Views: `td today` · `td inbox` · `td upcoming <days>` ·
   `td completed list --since YYYY-MM-DD --until YYYY-MM-DD`
 - Create: `td task quickadd "Review PR tomorrow p1 #Work @urgent"` —
-  preferred; the NL parser handles dates, p1–p4, #Project, @label,
-  /Section, +Assignee. Use `td task add "..." --project X --section Y
-  --labels "a,b" --due "..." --deadline YYYY-MM-DD --description "..."
-  --parent <ref> --priority p2` only when flags exceed quickadd syntax.
+  the NL parser handles dates, p1–p4, #Project, @label, /Section,
+  +Assignee. CAVEAT: `#Project` matches only exact single-word names;
+  a miss is silent (task lands in Inbox, literal `#...` kept in content).
+  For multi-word/emoji projects — or whenever routing must not miss —
+  use `td task add "..." --project X` (fuzzy-matched), with `--section`,
+  `--labels "a,b"`, `--due "<natural language>"`, `--deadline YYYY-MM-DD`,
+  `--description`, `--parent <ref>`, `--priority p2` as needed.
 - Read: `td task list --project X --label Y --priority p1 --limit 20` ·
   `td task view <ref>`
 - Change: `td task update <ref> [--due|--priority|--labels|--no-due|--no-labels]` ·

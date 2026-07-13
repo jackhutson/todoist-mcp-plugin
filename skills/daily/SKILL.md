@@ -41,7 +41,9 @@ rationale each; the user adjusts in one pass. Suggest ≤3 items at p1.
 
 ### 5. Sort & apply
 Assign project/section/labels to new items, then apply everything:
-- Batch 1 — creations: `td task quickadd "..." --quiet` per new task.
+- Batch 1 — creations: `td task add "<content>" --project "<project>"
+  [--due "<when>"] --quiet` per new task (quickadd `#` routing misses
+  multi-word/emoji project names silently).
 - Batch 2 — changes: `td task update|reschedule|complete|delete` per
   phase-2/4 decision (delete needs `--yes`).
 Send a batch to `todoist-agent` when it exceeds ~10 commands.
