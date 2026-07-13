@@ -46,8 +46,11 @@ preserve existing entries):
 Mutations stay unlisted (they prompt normally); destructive commands
 always prompt.
 
-### 6. Verify
-`td today` runs clean → report ready, and mention `/todoist:capture`,
+### 6. Verify & seed
+`td today` runs clean → seed the structure cache: run `td project list`
+and `td label list`, write the names to
+`~/.config/todoist-plugin/structure.md` (shape defined in the `todoist`
+skill), then report ready and mention `/todoist:capture`,
 `/todoist:daily`, `/todoist:triage`.
 
 ## Migrating from v1 (MCP)

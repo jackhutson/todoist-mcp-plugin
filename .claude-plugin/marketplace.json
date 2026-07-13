@@ -1,6 +1,6 @@
 {
   "name": "todoist-marketplace",
-  "owner": {},
+  "owner": { "name": "Jack Hutson", "email": "code@jackhutson.com" },
   "plugins": [
     {
       "name": "todoist",

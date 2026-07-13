@@ -47,13 +47,16 @@ Two execution paths, chosen by output size:
 
 | | Idle | Triggered |
 |---|------|-----------|
-| This plugin (ops skill) | ~110 tokens | ~625 tokens |
+| This plugin (ops skill) | ~110 tokens | ~855 tokens |
+| This plugin (all 5 skills + agent) | ~870 tokens | pay-per-invoke |
 | Official `td` skill | ~120 tokens | ~6.8k tokens |
 | Doist MCP server (always loaded) | ~2.5k tokens/message | — |
 
 Idle = frontmatter loaded every session; triggered = full skill body.
-Figures are measured (~chars/4) by `scripts/check-skills.mjs`, which CI
-runs with hard ceilings so neither cost can silently grow.
+Per-skill figures are chars/4, enforced with hard CI ceilings by
+`scripts/check-skills.mjs`. The plugin-total row is the official
+`claude plugin details` estimate — its tokenizer counts higher than
+chars/4 (ops skill: ~1.3k vs ~855 triggered), so treat chars/4 as a floor.
 
 ## Why not the official `td` skill?
 

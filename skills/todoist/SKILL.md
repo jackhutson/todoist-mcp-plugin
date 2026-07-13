@@ -22,25 +22,45 @@ an auth failure, invoke `todoist:setup` instead of improvising.
   full-account scans, multi-project sweeps, structure discovery. Ask for a
   digest (≤30 lines) of exactly what is needed.
 
-## Preferences
+## Preferences & structure cache
 
-If `~/.config/todoist-plugin/preferences.md` exists, read it once per
-session and honor its `key: value` entries (e.g. `capture-project`).
+Read once per session, only when first needed, from
+`~/.config/todoist-plugin/`:
+
+- `preferences.md` — honor its `key: value` entries (e.g. `capture-project`).
+- `structure.md` — exact project and label names, for routing without a
+  discovery call. If missing, or any command errors name-not-found:
+  refresh (`td project list` + `td label list`), rewrite the file in this
+  shape, then retry the command once:
+
+      updated: YYYY-MM-DD
+      ## Projects
+      - 🗓️ Admin
+      ## Labels
+      - @deep
+
+  The account is the source of truth; never argue with an error from a
+  cached name — refresh.
 
 ## Core commands
 
 - Views: `td today` · `td inbox` · `td upcoming <days>` ·
   `td completed list --since YYYY-MM-DD --until YYYY-MM-DD`
 - Create: `td task quickadd "Review PR tomorrow p1 #Work @urgent"` —
-  preferred; the NL parser handles dates, p1–p4, #Project, @label,
-  /Section, +Assignee. Use `td task add "..." --project X --section Y
-  --labels "a,b" --due "..." --deadline YYYY-MM-DD --description "..."
-  --parent <ref> --priority p2` only when flags exceed quickadd syntax.
+  the NL parser handles dates, p1–p4, #Project, @label, /Section,
+  +Assignee. CAVEAT: `#Project` matches only exact single-word names;
+  a miss is silent (task lands in Inbox, literal `#...` kept in content).
+  For multi-word/emoji projects — or whenever routing must not miss —
+  use `td task add "..." --project X` (fuzzy-matched), with `--section`,
+  `--labels "a,b"`, `--due "<natural language>"`, `--deadline YYYY-MM-DD`,
+  `--description`, `--parent <ref>`, `--priority p2` as needed.
 - Read: `td task list --project X --label Y --priority p1 --limit 20` ·
   `td task view <ref>`
 - Change: `td task update <ref> [--due|--priority|--labels|--no-due|--no-labels]` ·
-  `td task reschedule <ref> <when>` · `td task move <ref> --project X` ·
+  `td task reschedule <ref> <YYYY-MM-DD>` · `td task move <ref> --project X` ·
   `td task complete <ref>` · `td task delete <ref> --yes`
+- Dates: `reschedule` takes only YYYY-MM-DD; natural language ("tomorrow",
+  "monday") goes through `--due` on add/update, or quickadd text.
 - Structure: `td project list` · `td section list <project>` ·
   `td label list` · `td filter list` ·
   `td filter create --name X --query "p1 & #Work"`
@@ -61,3 +81,4 @@ session and honor its `key: value` entries (e.g. `capture-project`).
 - **Error repair:** name-not-found → re-list that entity type → retry
   once → report. Auth error → suggest `/todoist:setup`.
 - **Destructive:** `delete` requires `--yes`; confirm with the user first.
+  Without `--yes` it prints "Would delete" and exits 0 — a no-op, not success.

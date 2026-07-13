@@ -2,6 +2,7 @@
 // Lint skill frontmatter and enforce per-skill token budgets (~chars/4).
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const BUDGETS = { todoist: 1300, setup: 1200, capture: 900, triage: 1000, daily: 1400 };
 const DEFAULT_BUDGET = 1500;
@@ -10,7 +11,7 @@ const DEFAULT_BUDGET = 1500;
 const IDLE_BUDGETS = { todoist: 120, setup: 110, capture: 100, triage: 90, daily: 90 };
 const DEFAULT_IDLE_BUDGET = 120;
 
-const root = new URL('..', import.meta.url).pathname;
+const root = fileURLToPath(new URL('..', import.meta.url));
 const skillsDir = join(root, 'skills');
 let failed = false;
 
