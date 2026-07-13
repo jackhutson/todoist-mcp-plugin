@@ -2,7 +2,7 @@
   "name": "todoist",
   "description": "Token-efficient Todoist for Claude Code — lean td-CLI operations plus optional workflow skills (session capture, daily ritual, inbox triage)",
   "version": "2.0.0",
-  "author": {},
+  "author": { "name": "Jack Hutson", "email": "code@jackhutson.com" },
   "license": "MIT",
   "keywords": ["todoist", "tasks", "productivity", "cli", "workflows", "gtd"]
 }
