@@ -39,8 +39,10 @@ session and honor its `key: value` entries (e.g. `capture-project`).
 - Read: `td task list --project X --label Y --priority p1 --limit 20` ·
   `td task view <ref>`
 - Change: `td task update <ref> [--due|--priority|--labels|--no-due|--no-labels]` ·
-  `td task reschedule <ref> <when>` · `td task move <ref> --project X` ·
+  `td task reschedule <ref> <YYYY-MM-DD>` · `td task move <ref> --project X` ·
   `td task complete <ref>` · `td task delete <ref> --yes`
+- Dates: `reschedule` takes only YYYY-MM-DD; natural language ("tomorrow",
+  "monday") goes through `--due` on add/update, or quickadd text.
 - Structure: `td project list` · `td section list <project>` ·
   `td label list` · `td filter list` ·
   `td filter create --name X --query "p1 & #Work"`
@@ -61,3 +63,4 @@ session and honor its `key: value` entries (e.g. `capture-project`).
 - **Error repair:** name-not-found → re-list that entity type → retry
   once → report. Auth error → suggest `/todoist:setup`.
 - **Destructive:** `delete` requires `--yes`; confirm with the user first.
+  Without `--yes` it prints "Would delete" and exits 0 — a no-op, not success.
