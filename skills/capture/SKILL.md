@@ -35,4 +35,5 @@ Harvest loose ends from the current session into Todoist. Requires `td`
 Read `capture-project:` from `~/.config/todoist-plugin/preferences.md`.
 If absent, ask once — "Which project should session captures go to?
 (Inbox is fine)" — then append `- capture-project: <answer>` to the file
-(create file and directory if needed).
+(create file and directory if needed). Resolve project names against the
+structure cache (see the `todoist` skill) before filing.

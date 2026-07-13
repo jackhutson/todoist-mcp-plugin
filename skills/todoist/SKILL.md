@@ -22,10 +22,25 @@ an auth failure, invoke `todoist:setup` instead of improvising.
   full-account scans, multi-project sweeps, structure discovery. Ask for a
   digest (≤30 lines) of exactly what is needed.
 
-## Preferences
+## Preferences & structure cache
 
-If `~/.config/todoist-plugin/preferences.md` exists, read it once per
-session and honor its `key: value` entries (e.g. `capture-project`).
+Read once per session, only when first needed, from
+`~/.config/todoist-plugin/`:
+
+- `preferences.md` — honor its `key: value` entries (e.g. `capture-project`).
+- `structure.md` — exact project and label names, for routing without a
+  discovery call. If missing, or any command errors name-not-found:
+  refresh (`td project list` + `td label list`), rewrite the file in this
+  shape, then retry the command once:
+
+      updated: YYYY-MM-DD
+      ## Projects
+      - 🗓️ Admin
+      ## Labels
+      - @deep
+
+  The account is the source of truth; never argue with an error from a
+  cached name — refresh.
 
 ## Core commands
 
