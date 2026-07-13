@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.1.0] - 2026-07-12
+
+### Fixed
+- **Install was broken:** empty `owner`/`author` objects in the plugin
+  manifests made `claude plugin marketplace add` fail schema validation.
+  CI meta check now guards `owner.name`/`author.name`.
+- **Silent project misrouting:** capture and daily filed tasks with
+  quickadd `#Project` tokens, which only match exact single-word names —
+  multi-word/emoji projects fell through to Inbox with literal `#...`
+  text. Creations now route via `td task add --project` (fuzzy-matched).
+- Ops skill documented `td task reschedule <when>`; the CLI accepts only
+  YYYY-MM-DD there. Natural-language dates are documented via `--due`.
+- Noted `td task delete` without `--yes` is an exit-0 no-op.
+
+### Added
+- Lazy structure cache at `~/.config/todoist-plugin/structure.md` —
+  exact project/label names for routing without discovery calls; seeded
+  by `/todoist:setup`, refreshed only on name-not-found. Zero idle cost.
+- README token table now states the whole-plugin always-on cost (~870
+  tokens via `claude plugin details`) alongside per-skill chars/4 floors.
+
 ## [2.0.0] - 2026-07-03
 
 ### Changed (breaking)
